@@ -1,0 +1,31 @@
+.sage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto 8px auto;
+}
+.wid{
+    width: 57% !important;
+    margin: 15% auto !important;
+}
+.wit{
+    margin: 0px 10px;
+}
+.fa{
+    margin: auto 10px !important;
+}
+.ff{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto 18px auto;
+}
+.fg{
+    display: flex;
+    justify-content: center;
+    margin: 3px 18px 15px 18px;
+}
+
+.fc{
+    margin: 20px 0px !important;
+}    
