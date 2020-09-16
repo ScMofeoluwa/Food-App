@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-         <link rel="stylesheet" type="text/css" href="static/css/semantic.min.css">
-        <link rel="stylesheet" type="text/css" href="static/css/main.css">
+         <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/semantic.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/main.css')}}">
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-        <script src="static/js/semantic.min.js"></script>      
+        <script href="url_for('static',filename='js/semantic.min.js')}}"></script>      
         </style>
     </head> 
     <body>
@@ -37,15 +37,16 @@
                     <div class="ui horizontal divider">
                         Or
                       </div>
-                    <form class="ui big form">
+                    <form method="POST" action="" class="ui big form">
+                        {{ form.hidden_tag() }}
                         <div class="required field">
-                            <input type="text" name="first-name" placeholder="Username">
+                            {{ form.username(placeholder="Username") }}
                         </div>
                         <div class="required field">
-                            <input type="email" placeholder="Email">
+                            {{ form.email(placeholder="Email") }}
                           </div>
                         <div class="required field">
-                            <input type="password" placeholder="Password">
+                            {{ form.password(placeholder="Password") }}
                         </div>
                     </form>
                     <div class="fg">
@@ -53,9 +54,7 @@
                             numbers and special characters. Cannot contain whitespace
                     </div>
                     <div class="wit">
-                        <button class="fluid ui big primary button">
-                            Sign Up
-                        </button>
+                        {{ form.submit(class="fluid ui big primary button") }}
                     </div>
                 </div>
             </div>    
