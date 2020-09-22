@@ -5,12 +5,14 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from config import Config
 
+
 db = SQLAlchemy()
-bcrypt = Bcrypt()
 login_manager = LoginManager()
+bcrypt = Bcrypt()
 migrate = Migrate()
-login_manager.login_view = 'login'
-login_manager.login_message_category = 'danger-alert'
+login_manager.login_view = "login"
+login_manager.login_message_category = "danger-alert"
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -19,8 +21,14 @@ def create_app(config_class=Config):
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    migrate.init_app(app,db)
+    migrate.init_app(app, db)
 
     with app.app_context():
-        from . import routes,models
+        from . import routes
+        from .oauth import google_blueprint, twitter_blueprint, facebook_blueprint
+
+        app.register_blueprint(facebook_blueprint, url_prefix="/login")
+        app.register_blueprint(google_blueprint, url_prefix="/login")
+        app.register_blueprint(twitter_blueprint, url_prefix="/login")
+
         return app
