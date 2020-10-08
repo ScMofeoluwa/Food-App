@@ -1,8 +1,8 @@
 from flask import flash, redirect, url_for
-from flask_login import current_user, login_user
-from flask_dance.contrib.twitter import make_twitter_blueprint
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
+from flask_dance.contrib.twitter import make_twitter_blueprint
+from flask_login import current_user, login_user
 from sqlalchemy.orm.exc import NoResultFound
 
 from .. import db
@@ -17,13 +17,13 @@ blueprint = make_twitter_blueprint(
 def twitter_logged_in(blueprint, token):
     if not token:
         flash("Failed to log in with twitter.", category="error")
-        return
+        return False
 
-    resp = blueprint.session.get("/oauth2/v2/userinfo")
+    resp = blueprint.session.get("account/verify_credentials.json")
     if not resp.ok:
         msg = "Failed to fetch user info from twitter."
         flash(msg, category="error")
-        return
+        return False
 
     twitter_info = resp.json()
     twitter_user_id = str(twitter_info["id"])
@@ -35,7 +35,7 @@ def twitter_logged_in(blueprint, token):
     try:
         oauth = query.one()
     except NoResultFound:
-        twitter_user_login = str(twitter_info["email"])
+        twitter_user_login = str(twitter_info["screen_name"])
         oauth = OAuth(
             provider=blueprint.name,
             provider_user_id=twitter_user_id,
@@ -57,7 +57,7 @@ def twitter_logged_in(blueprint, token):
             # create a new local user account and log that account in.
             # This means that one person can make multiple accounts, but it's
             # OK because they can merge those accounts later.
-            user = User(username=twitter_info["email"])
+            user = User(username=twitter_info["screen_name"])
             oauth.user = user
             db.session.add_all([user, oauth])
             db.session.commit()

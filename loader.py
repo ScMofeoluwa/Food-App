@@ -1,7 +1,9 @@
 import json
+
+
 def load_db():
-    with open("foods.json",'rb') as f:
+    with open("foods.json", "rb") as f:
         return json.load(f)
 
-foods = load_db()
 
+foods = load_db()

@@ -4,3 +4,5 @@
 /.env
 /Food_App/__pycache__
 /.vscode/
+/Food_App/oauth/__pycache__/
+/.idea/

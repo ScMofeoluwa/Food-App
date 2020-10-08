@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="heyo ui container">
+        <div class="ui container raised segment wid">
+            <div class="fa">
+                <div class="sage">
+                    <h1>Sign In</h1>
+                </div>
+                <div class="ff">
+                    with your social network
+                </div>
+                <div class="sage">
+                    <a class="large ui facebook button" href="{{ url_for("facebook.login") }}">
+                        <i class="facebook icon"></i>
+                        Facebook
+                    </a>
+                    <a class="large ui twitter button" href="{{ url_for("twitter.login") }}">
+                        <i class="twitter icon"></i>
+                        Twitter
+                    </a>
+                    <a class="large ui google plus button" href="{{ url_for("google.login") }}">
+                        <i class="google icon"></i>
+                        Google
+                    </a>
+                </div>
+                <div class="ui horizontal divider">
+                    Or
+                    </div>
+                <form method="POST" action="" class="ui big form">
+                    {{ form.hidden_tag() }}
+                    <div class="required field">
+                        {{ form.email(placeholder="Email") }}
+                        </div>
+                    <div class="required field">
+                        {{ form.password(placeholder="Password") }}
+                    </div>
+                    <div class="ui checkbox">
+                        {{ form.remember}}
+                        {{ form.remember.label}}
+                    </div>
+                </form>
+                <div class="wit">
+                    {{ form.submit(class="fluid ui big primary button") }}
+                </div>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

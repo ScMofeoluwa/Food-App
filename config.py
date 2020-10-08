@@ -1,6 +1,6 @@
 from os import environ, path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 basedir = path.dirname(path.abspath(__file__))
 load_dotenv(path.join(basedir, ".env"), verbose=True)
@@ -19,6 +19,7 @@ class Config:
     FACEBOOK_OAUTH_CLIENT_SECRET = environ.get("FACEBOOK_OAUTH_CLIENT_SECRET")
     TWITTER_OAUTH_CLIENT_KEY = environ.get("TWITTER_OAUTH_CLIENT_KEY")
     TWITTER_OAUTH_CLIENT_SECRET = environ.get("TWITTER_OAUTH_CLIENT_SECRET")
+
 
 class ProductionConfig(Config):
     DEBUG = False

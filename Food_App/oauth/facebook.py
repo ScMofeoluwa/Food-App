@@ -1,8 +1,8 @@
 from flask import flash, redirect, url_for
-from flask_login import current_user, login_user
-from flask_dance.contrib.facebook import make_facebook_blueprint
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
+from flask_dance.contrib.facebook import make_facebook_blueprint
+from flask_login import current_user, login_user
 from sqlalchemy.orm.exc import NoResultFound
 
 from .. import db
@@ -18,13 +18,13 @@ blueprint = make_facebook_blueprint(
 def facebook_logged_in(blueprint, token):
     if not token:
         flash("Failed to log in with facebook.", category="error")
-        return
+        return False
 
-    resp = blueprint.session.get("/oauth2/v2/userinfo")
+    resp = blueprint.session.get("account/verify_credentials.json")
     if not resp.ok:
         msg = "Failed to fetch user info from facebook."
         flash(msg, category="error")
-        return
+        return False
 
     facebook_info = resp.json()
     facebook_user_id = str(facebook_info["id"])
