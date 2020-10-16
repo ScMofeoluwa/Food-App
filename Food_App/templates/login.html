@@ -1,48 +1,79 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="heyo ui container">
-        <div class="ui container raised segment wid">
-            <div class="fa">
-                <div class="sage">
-                    <h1>Sign In</h1>
+<div class="heyo ui container">
+    <div class="ui container raised segment wid">
+        <div class="fa">
+            <div class="sage">
+                <h1>Sign In</h1>
+            </div>
+            <div class="ff">
+                with your social network
+            </div>
+            <div class="sage">
+                <a class="large ui facebook button" href="{{ url_for("facebook.login") }}">
+                    <i class="facebook icon"></i>
+                    Facebook
+                </a>
+                <a class="large ui twitter button" href="{{ url_for("twitter.login") }}">
+                    <i class="twitter icon"></i>
+                    Twitter
+                </a>
+                <a class="large ui google plus button" href="{{ url_for("google.login") }}">
+                    <i class="google icon"></i>
+                    Google
+                </a>
+            </div>
+            <div class="ui horizontal divider">
+                Or
+            </div>
+            <form method="POST" action="" class="ui big form fluid segment" novalidate>
+                {{ form.hidden_tag() }}
+                <!-- Email field and validation -->
+                {% if form.email.errors %}
+                <div class="error field required">
+                    {{ form.email.label }}
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                    {% endfor %}
                 </div>
-                <div class="ff">
-                    with your social network
+                {% else %}
+                <div class="field required">
+                    {{ form.email.label }}
+                    {{ form.email }}
                 </div>
-                <div class="sage">
-                    <a class="large ui facebook button" href="{{ url_for("facebook.login") }}">
-                        <i class="facebook icon"></i>
-                        Facebook
-                    </a>
-                    <a class="large ui twitter button" href="{{ url_for("twitter.login") }}">
-                        <i class="twitter icon"></i>
-                        Twitter
-                    </a>
-                    <a class="large ui google plus button" href="{{ url_for("google.login") }}">
-                        <i class="google icon"></i>
-                        Google
-                    </a>
+                {% endif %}
+
+                <!-- Password field and validation -->
+                {% if form.password.errors %}
+                <div class="error field required">
+                    {{ form.password.label }}
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                    <div class="ui basic red pointing prompt label transition visible">{{ error }}</div>
+                    {% endfor %}
                 </div>
-                <div class="ui horizontal divider">
-                    Or
-                    </div>
-                <form method="POST" action="" class="ui big form">
-                    {{ form.hidden_tag() }}
-                    <div class="required field">
-                        {{ form.email(placeholder="Email") }}
-                        </div>
-                    <div class="required field">
-                        {{ form.password(placeholder="Password") }}
-                    </div>
+                {% else %}
+                <div class="field required">
+                    {{ form.password.label }}
+                    {{ form.password }}
+                </div>
+                {% endif %}
+                <div class="inline field">
                     <div class="ui checkbox">
-                        {{ form.remember}}
-                        {{ form.remember.label}}
+                        {{ form.remember }}
+                        {{ form.remember.label }}
                     </div>
-                </form>
-                <div class="wit">
+                </div>
+                <div class="ui submit wit">
                     {{ form.submit(class="fluid ui big primary button") }}
                 </div>
+            </form>
+            <div class="ui bottom attached warning message">
+                <i class="icon help"></i>
+                Forgot Password? <a href="">Reset Password</a>
             </div>
-        </div>    
+        </div>
     </div>
+</div>
 {% endblock %}

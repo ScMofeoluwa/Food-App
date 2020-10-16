@@ -26,7 +26,7 @@
             <div class="ui horizontal divider">
                 Or
             </div>
-            <form method="POST" action="" class="ui big form" novalidate>
+            <form method="POST" action="" class="ui big form fluid segment" novalidate>
                 {{ form.hidden_tag() }}
                 <!-- Username field and validation -->
                 {% if form.username.errors %}
@@ -85,7 +85,10 @@
                     {{ form.submit(class="fluid ui big primary button") }}
                 </div>
             </form>
-
+            <div class="ui bottom attached warning message">
+                <i class="icon help"></i>
+                Already signed up? <a href="{{ url_for('login') }}">Login here</a> instead.
+            </div>
 
         </div>
     </div>

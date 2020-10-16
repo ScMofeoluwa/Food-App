@@ -1,7 +1,9 @@
 from datetime import datetime
 
+from flask import current_app as app
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from sqlalchemy.orm.collections import attribute_mapped_collection
 
 from . import db, login_manager
@@ -17,7 +19,21 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(40), unique=True, nullable=True)
     password = db.Column(db.String(60), nullable=True)
+    confirmed = db.Column(db.Boolean, default=False)
     foods = db.relationship("Food", backref="users", lazy="dynamic")
+
+    def get_confirmation_token(self, expires_sec=3600):
+        s = Serializer(app.config["SECRET_KEY"], expires_sec)
+        return s.dumps(self.email).decode("utf-8")
+
+    @staticmethod
+    def confirm_token(token):
+        s = Serializer(app.config["SECRET_KEY"])
+        try:
+            email = s.loads(token)
+        except:
+            return False
+        return email
 
     def __repr__(self):
         return f"User('{self.username}','{self.email}')"
