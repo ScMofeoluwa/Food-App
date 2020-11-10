@@ -49,7 +49,7 @@ def register():
 def confirm_email(token):
     if current_user.confirmed:
         flash("Account already confirmed. Please login.", "success")
-        return redirect(url_for("home")
+        return redirect(url_for("home"))
     email = User.confirm_token(token)
     user = User.query.filter_by(email=current_user.email).first_or_404()
     if user.email == email:
